@@ -30,8 +30,18 @@ public class KafkaController {
         return new ResponseEntity<>(savedStudent, HttpStatus.OK);
     }
 
+    // here we created only one instance of consumer so only this will consume the data from all partitions
+    // but if we want this code to consume the data from one partition only and other instances to consume from
+    // other instances then we can simply copy-paste the same piece of code and paste it here again with different
+    // function name
     @KafkaListener(topics = "${student.kafka.topic}")
     public void consumeMessage(String message){
-        LOG.info("Consumed the message {}", message);
+        LOG.info("Consumer 1 Consumed the message {}", message);
+    }
+
+    // second instance which consume the message
+    @KafkaListener(topics = "${student.kafka.topic}")
+    public void consumeMessageSecondInstance(String message){
+        LOG.info("Consumer 2 Consumed the message {}", message);
     }
 }
