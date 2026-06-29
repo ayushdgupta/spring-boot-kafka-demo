@@ -45,6 +45,19 @@ public class StudentPublisher {
                     return false;
                 });
 
+        /*
+            Another way to capture the result
+                send.whenComplete((result, ex) -> {
+                if (ex != null){
+                    LOG.error("exception occurred while sending message {}", ex.getMessage(), ex);
+                } else {
+                    long offset = result.getRecordMetadata().offset();
+                    int partition = result.getRecordMetadata().partition();
+                    LOG.info("Result sent to offset {} of partition {}", offset, partition);
+                }
+            });
+         */
+
         return resultIsSent.join();
     }
 }
